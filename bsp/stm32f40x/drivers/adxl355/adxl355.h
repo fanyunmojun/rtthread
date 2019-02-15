@@ -76,25 +76,13 @@
 #define RESET                    0x2F
 
 
-typedef enum {
+#define RANGE_2G  0x81
 
-   SPI_WRITE_ONE_REG = 1,         /* Write 1 ACC register */
+#define RANGE_4G  0x82
 
-   SPI_WRITE_TWO_REG,             /* Write 2 ACC register */
+#define RANGE_8G  0x83
 
-} enWriteData;
-
-
-
-typedef enum {
-
-   SPI_READ_ONE_REG = 1,            /* Read one ACC register */
-
-   SPI_READ_TWO_REG,                /* Read two ACC registers */
-
-   SPI_READ_THREE_REG,              /* Read X,Y,Z ACC registers */
-
-} enRegsNum;
+#define MEASURE_MODE  0x06 // Only accelerometer
 
 void adxl355_entry(void *parameter);
 

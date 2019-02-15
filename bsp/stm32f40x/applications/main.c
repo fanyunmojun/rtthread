@@ -11,6 +11,7 @@
 
 #include <rthw.h>
 #include <rtthread.h>
+#include "ms5611.h"
 #include "adxl355.h"
 #include "adxrs453.h"
 /**
@@ -18,6 +19,9 @@
  */
 
 /*@{*/
+
+static char thread_ms5611_stack[2048];
+struct rt_thread thread_ms5611_handle;
 
 static char thread_adxl355_stack[2048];
 struct rt_thread thread_adxl355_handle;
@@ -30,6 +34,15 @@ int main(void)
 {
     /* user app entry */
 	rt_err_t res;
+	
+	res = rt_thread_init(&thread_ms5611_handle,
+						   "ms5611",
+						   ms5611_entry,
+						   RT_NULL,
+						   &thread_ms5611_stack[0],
+						   sizeof(thread_ms5611_stack),9,1);
+	if (res == RT_EOK)
+		rt_thread_startup(&thread_ms5611_handle);
 	
 	res = rt_thread_init(&thread_adxl355_handle,
 						   "adxl355",
@@ -45,7 +58,7 @@ int main(void)
 						   adxrs453_entry,
 						   RT_NULL,
 						   &thread_adxrs453_stack[0],
-						   sizeof(thread_adxrs453_stack),10,1);
+						   sizeof(thread_adxrs453_stack),11,1);
 	if (res == RT_EOK)
 		rt_thread_startup(&thread_adxrs453_handle);
 	
